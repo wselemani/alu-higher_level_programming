@@ -13,7 +13,7 @@ def add_integer(a, b=98):
         The addition of a and b as an integer.
 
     Raises:
-        TypeError: If a or b is not an integer or float, or if they are NaN/inf.
+        TypeError: If a or b is not an integer/float, or NaN/inf.
     """
     if type(a) is not int and type(a) is not float:
         raise TypeError("a must be an integer")
@@ -31,4 +31,3 @@ def add_integer(a, b=98):
         raise TypeError("b must be an integer")
 
     return a + b
-
