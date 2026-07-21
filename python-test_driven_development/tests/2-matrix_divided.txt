@@ -16,13 +16,17 @@ Verifying that the original matrix was not mutated:
     >>> matrix
     [[1, 2, 3], [4, 5, 6]]
 
+Division by infinity results in 0.0 values:
+    >>> matrix_divided([[1, 2], [3, 4]], float('inf'))
+    [[0.0, 0.0], [0.0, 0.0]]
+
 Mismatched row sizes:
     >>> matrix_divided([[1, 2], [3, 4, 5]], 2)
     Traceback (most recent call last):
     TypeError: Each row of the matrix must have the same size
 
 Invalid matrix types:
-    >>> matrix_divided([1, 2], 2)
+    >>> matrix_divided(123, 2)
     Traceback (most recent call last):
     TypeError: matrix must be a matrix (list of lists) of integers/floats
 
@@ -40,3 +44,13 @@ Division by zero:
     Traceback (most recent call last):
     ZeroDivisionError: division by zero
 
+Missing one required argument (div missing):
+    >>> matrix_divided([[1, 2], [3, 4]])
+    Traceback (most recent call last):
+    TypeError: matrix_divided() missing 1 required positional argument: 'div'
+
+Missing two required arguments (both matrix and div missing):
+    >>> matrix_divided()
+    Traceback (most recent call last):
+    TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+ 
