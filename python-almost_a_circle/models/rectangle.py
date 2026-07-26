@@ -1,117 +1,108 @@
 #!/usr/bin/python3
-"""This module provides the Rectangle class template.
-
-The template inherits structural management properties from the Base module
-and applies robust parameter type testing alongside standard area geometry.
 """
+Write the class Rectangle that inherits from Base
+"""
+
 from models.base import Base
 
 
 class Rectangle(Base):
-    """A model mapping spatial layout profiles for rectangle instances."""
+    """Class Rectangle"""
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """Initializes a brand new geometric Rectangle profile.
-
-        Args:
-            width (int): Total linear breadth of the asset.
-            height (int): Total vertical rise of the asset.
-            x (int, optional): Horizontal coordinate offset. Defaults to 0.
-            y (int, optional): Vertical coordinate offset. Defaults to 0.
-            id (int, optional): Unique identification handle. Defaults to None.
-        """
-        super().__init__(id)
         self.width = width
         self.height = height
         self.x = x
         self.y = y
+        super().__init__(id)
 
     @property
     def width(self):
-        """Gets the active private width dimension."""
+        """Gets the value for width"""
         return self.__width
+
+    @property
+    def height(self):
+        """Gets the value for height"""
+        return self.__height
+
+    @property
+    def x(self):
+        """Gets the value for x"""
+        return self.__x
+
+    @property
+    def y(self):
+        """Gets the value for y"""
+        return self.__y
 
     @width.setter
     def width(self, value):
-        """Sets the horizontal width metric after running validation rules."""
-        if type(value) is not int:
+        """Sets the value for width"""
+        if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value <= 0:
             raise ValueError("width must be > 0")
         self.__width = value
 
-    @property
-    def height(self):
-        """Gets the active private height dimension."""
-        return self.__height
-
     @height.setter
     def height(self, value):
-        """Sets the vertical height metric after running validation rules."""
-        if type(value) is not int:
+        """Sets the value for heigth"""
+        if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value <= 0:
             raise ValueError("height must be > 0")
         self.__height = value
 
-    @property
-    def x(self):
-        """Gets the private horizontal offset value."""
-        return self.__x
-
     @x.setter
     def x(self, value):
-        """Sets the horizontal padding value after running validation rules."""
-        if type(value) is not int:
+        """Sets the value for x"""
+        if not isinstance(value, int):
             raise TypeError("x must be an integer")
         if value < 0:
             raise ValueError("x must be >= 0")
         self.__x = value
 
-    @property
-    def y(self):
-        """Gets the private vertical offset value."""
-        return self.__y
-
     @y.setter
     def y(self, value):
-        """Sets the vertical padding value after running validation rules."""
-        if type(value) is not int:
+        """Sets the value for y"""
+        if not isinstance(value, int):
             raise TypeError("y must be an integer")
         if value < 0:
             raise ValueError("y must be >= 0")
         self.__y = value
 
     def area(self):
-        """Computes and returns the surface area of the rectangle instance."""
-        return self.__width * self.__height
+        """Returns the area value of the Rectangle instance."""
+        return self.width * self.height
 
     def display(self):
-        """Prints the visual layout map with character hashes taking care of x and y."""
-        print("\n" * self.__y, end="")
-        for _ in range(self.__height):
-            print(" " * self.__x + "#" * self.__width)
-
-    def __str__(self):
-        """Overrides str method to return standard structured info."""
-        return "[Rectangle] ({}) {}/{} - {}/{}".format(
-            self.id, self.__x, self.__y, self.__width, self.__height
-        )
+        """Prints in stdout the Rectangle instance with the character #"""
+        for row in range(self.y):
+            print("")
+        for row in range(self.height):
+            print((" " * self.x) + ("#" * self.width))
 
     def update(self, *args, **kwargs):
-        """Assigns positional args or key/value kwargs to attributes."""
-        attrs = ["id", "width", "height", "x", "y"]
-        if args and len(args) > 0:
+        """Assigns an argument to each attribute:"""
+        if args:
+            attributes = ['id', 'width', 'height', 'x', 'y']
             for i, arg in enumerate(args):
-                if i < len(attrs):
-                    setattr(self, attrs[i], arg)
+                if i == 0 and arg is None:
+                    self.__init__(self.width, self.height, self.x, self.y)
+                else:
+                    setattr(self, attributes[i], arg)
         elif kwargs:
             for key, value in kwargs.items():
-                if key in attrs:
-                    setattr(self, key, value)
+                attributes = ['id', 'width', 'height', 'x', 'y']
+                if key == "id" and value is None:
+                    self.__init__(self.width, self.height, self.x, self.y)
+                else:
+                    if key in attributes:
+                        setattr(self, key, value)
 
     def to_dictionary(self):
-        """Returns the dictionary representation of a Rectangle instance."""
+        """Returns the dictionary representation of a Rectangle object."""
         return {
             "id": self.id,
             "width": self.width,
@@ -120,4 +111,8 @@ class Rectangle(Base):
             "y": self.y
         }
 
+    def __str__(self):
+        """String representation of a rectangle instance"""
+        return f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - \
+{self.__width}/{self.__height}"
 
