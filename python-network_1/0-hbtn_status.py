@@ -1,18 +1,17 @@
 #!/usr/bin/python3
 """
-Fetches a given URL and displays the body response formatting.
+This module fetches the status from the Holberton/ALX intranet URL
+using the urllib package and prints the formatted body response.
 """
-import sys
 import urllib.request
 
 
 if __name__ == "__main__":
-    url = sys.argv[1]
-
+    url = 'https://intranet.hbtn.io/status'
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
-        content = response.read()
+        body = response.read()
         print("Body response:")
-        print("    - type: {}".format(type(content)))
-        print("    - content: {}".format(content))
-        print("    - utf8 content: {}".format(content.decode("utf-8")))
+        print("\t- type: {}".format(type(body)))
+        print("\t- content: {}".format(body))
+        print("\t- utf8 content: {}".format(body.decode('utf-8')))
